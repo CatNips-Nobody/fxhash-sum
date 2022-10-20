@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>FXHASH project</title>
+  <meta charset="utf-8">
+  <script id="fxhash-snippet">
+    //---- do not edit the following code (you can indent as you wish)
+    let alphabet = "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
+    var fxhash = "oo" + Array(49).fill(0).map(_ => alphabet[(Math.random() * alphabet.length) | 0]).join('')
+    let b58dec = (str) => str.split('').reduce((p, c, i) => p + alphabet.indexOf(c) * (Math.pow(alphabet.length, str.length - i - 1)), 0)
+    let fxhashTrunc = fxhash.slice(2)
+    let regex = new RegExp(".{" + ((fxhash.length / 4) | 0) + "}", 'g')
+    let hashes = fxhashTrunc.match(regex).map(h => b58dec(h))
+    let sfc32 = (a, b, c, d) => {
+      return () => {
+        a |= 0; b |= 0; c |= 0; d |= 0
+        var t = (a + b | 0) + d | 0
+        d = d + 1 | 0
+        a = b ^ b >>> 9
+        b = c + (c << 3) | 0
+        c = c << 21 | c >>> 11
+        c = c + t | 0
+        return (t >>> 0) / 4294967296
+      }
+    }
+    var fxrand = sfc32(...hashes)
+      //---- /do not edit the following code
+  </script>
+
+  <link rel="stylesheet" href="./style.css">
+
+  <!-- if you need to import js scripts do it here -->
+</head>
+
+<body>
+
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1680 1680"
+    style="background-color:#eee">
+
+    <g id='blank' visibility="hidden">
+      <rect width="210" height="210" rx="0" ry="0" fill="none" stroke="none" stroke-width="1" />
+    </g>
+
+    <g id='eyenose' visibility="hidden">
+      <line visibility="hidden" class="eyeline" x1="67.54" y1="105" x2="142.46" y2="105" fill="none" stroke="#111"
+        stroke-width="4" stroke-miterlimit="10" />
+      <path class="iris"
+        d="M123.51,91.89C112.024247,87.979687,99.597337,87.794211,88,91.36C79.957712,93.727372,72.825514,98.484496,67.55,105C75.12,114.65,88.85,121.15,104.99,121.15C121.13,121.15,134.9,114.65,142.46,105C137.538901,98.89493,130.95819,94.342258,123.51,91.89Z"
+        transform="matrix(1 0 0 1 -0.01 0.01)" fill="none" stroke="#111" stroke-width="4" stroke-miterlimit="10" />
+      <path class="pupil"
+        d="M105.17,114.69C113.598532,114.805492,121.057922,109.256034,123.37,101.15C124.242283,98.13033,124.283739,94.93126,123.49,91.89C117.541408,89.841081,111.291545,88.803381,105,88.82C99.237519,88.802478,93.505696,89.658879,88,91.36C86.449091,96.808213,87.505762,102.667448,90.86216,107.230663C94.218559,111.793879,99.497128,114.547765,105.16,114.69Z"
+        fill="#111" stroke="#111" stroke-width="4" stroke-miterlimit="10" />
+      <path d="M0,34L103,34C143,34,176,67,176,107L176,210" fill="none" stroke="#111" stroke-width="8"
+        stroke-miterlimit="10" />
+    </g>
+
+    <g id='singleeye' visibility="hidden">
+      <line visibility="hidden" class="eyeline" x1="67.54" y1="105" x2="142.46" y2="105" fill="none" stroke="#111"
+        stroke-width="4" stroke-miterlimit="10" />
+      <path class="iris"
+        d="M123.51,91.89C112.024247,87.979687,99.597337,87.794211,88,91.36C79.957712,93.727372,72.825514,98.484496,67.55,105C75.12,114.65,88.85,121.15,104.99,121.15C121.13,121.15,134.9,114.65,142.46,105C137.538901,98.89493,130.95819,94.342258,123.51,91.89Z"
+        transform="matrix(1 0 0 1 -0.01 0.01)" fill="none" stroke="#111" stroke-width="4" stroke-miterlimit="10" />
+      <path class="pupil"
+        d="M105.17,114.69C113.598532,114.805492,121.057922,109.256034,123.37,101.15C124.242283,98.13033,124.283739,94.93126,123.49,91.89C117.541408,89.841081,111.291545,88.803381,105,88.82C99.237519,88.802478,93.505696,89.658879,88,91.36C86.449091,96.808213,87.505762,102.667448,90.86216,107.230663C94.218559,111.793879,99.497128,114.547765,105.16,114.69Z"
+        fill="#111" stroke="#111" stroke-width="4" stroke-miterlimit="10" />
+    </g>
+
+    <g id='foot' visibility="hidden">
+      <path
+        d="M12.5,92.75C-5.03,92.75,-5.03,114.98,12.5,114.98C18.522632,116.923587,24.343083,119.445336,29.88,122.51C74.84,146.63,125,176,210,176"
+        fill="none" stroke="#111" stroke-width="8" stroke-miterlimit="10" />
+      <path
+        d="M43.63,107.3225C38.090646,104.262793,32.270682,101.741255,26.25,99.7925C8.72,99.7925,8.72,77.5625,26.25,77.5625"
+        fill="none" stroke="#111" stroke-width="8" stroke-miterlimit="10" />
+      <path d="M57.38,92.165C51.843842,89.093453,46.023368,86.564996,40,84.615C22.47,84.615,22.47,62.375,40,62.375"
+        fill="none" stroke="#111" stroke-width="8" stroke-miterlimit="10" />
+      <path
+        d="M71.13,76.9175C65.590646,73.857793,59.770682,71.336255,53.75,69.3875C36.22,69.3875,36.22,47.1875,53.75,47.1875"
+        fill="none" stroke="#111" stroke-width="8" stroke-miterlimit="10" />
+      <path d="M84.88,61.76C79.340646,58.700293,73.520682,56.178755,67.5,54.23C49.97,54.23,49.97,32,67.5,32" fill="none"
+        stroke="#111" stroke-width="8" stroke-miterlimit="10" />
+    </g>
+
+    <g id='hand' visibility="hidden">
+      <path d="M74.16,81.57C67.33,120.75,69.84,156.17,79.47,153.32C87.23,151,90.17,134.9,93,117.19" fill="none"
+        stroke="#111" stroke-width="8" stroke-miterlimit="10" />
+      <path
+        d="M117.7,119.35C113.03,142.91,111.64,172.66,101.04,175.81C92.04,178.47,87.97,152.38,93.04,117.19C96.4,96.76,102.45,70,102.45,70"
+        fill="none" stroke="#111" stroke-width="8" stroke-miterlimit="10" />
+      <path
+        d="M130,64.81C130,64.81,121.3,92.67,117.72,119.35C112.96,153.82,116.84,178.41,125.72,175.78C135.55,172.86,137.66,147.73,141.64,125.29"
+        fill="none" stroke="#111" stroke-width="8" stroke-miterlimit="10" />
+      <path
+        d="M141.6,125.29C141.6,125.63,141.49,125.96,141.44,126.29C138.97,145.13,141.17,157.13,147.58,156.12C164,153.55,187.53,34,209.87,34"
+        fill="none" stroke="#111" stroke-width="8" stroke-miterlimit="10" />
+      <path d="M141.6,125.29C144.42,107.29,153,87.34,153,87.34" fill="none" stroke="#111" stroke-width="8"
+        stroke-miterlimit="10" />
+    </g>
+
+    <g id='chest' visibility="hidden">
+      <circle r="7" transform="matrix(1 0 0 1 60 64)" fill="none" stroke="#111" stroke-width="4"
+        stroke-miterlimit="10" />
+      <path d="M0,34L103,34C143,34,176,67,176,107L176,210" fill="none" stroke="#111" stroke-width="8"
+        stroke-miterlimit="10" />
+    </g>
+
+    <g id='boob' visibility="hidden">
+      <path d="M176,0C176,40,145,71,105,71C65,71,34,40,34,0" fill="none" stroke="#111" stroke-width="8"
+        stroke-miterlimit="10" />
+      <path d="M99,0C99,3.5,101.5,6,105,6C108.5,6,110,3.5,110,0Z" fill="#111" stroke="none" stroke-width="1" />
+      <path d="M117,0C117,6,111,12,105,12C99,12,93,6,93,0" fill="none" stroke="#111" stroke-width="4"
+        stroke-miterlimit="10" />
+    </g>
+
+    <g id='d' visibility="hidden">
+      <ellipse rx="30" ry="30" transform="matrix(1 0 0 1 75 60)" fill="#111" stroke="none" stroke-width="1" />
+      <ellipse rx="30" ry="30" transform="matrix(1 0 0 1 135 60)" fill="#111" stroke="none" stroke-width="1" />
+      <polygon points="135,90 75,90 75,210 135,210 135,90" fill="#111" stroke="none" stroke-width="1" />
+    </g>
+
+    <g id='bikini' visibility="hidden">
+      <polygon points="105,105 30,30 180,30 105,105" fill="#111" stroke="none" stroke-width="1" />
+    </g>
+
+  </svg>
+  <!-- WEBPACK will inject the bundle.js here -->
+</body>
+
+</html>
